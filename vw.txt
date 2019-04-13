@@ -1,0 +1,106 @@
+<%@page import="java.util.List"%>
+<%@page import="com.PostDAOImpl"%>
+<%@page import="com.Post"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+<title>Post</title>
+<style>
+h1 {
+	text-align: center;
+	margin: 20px;
+	padding: 20px;
+	background-color: #faecf3;
+}
+
+container {
+	padding: 20px;
+	text-align: center;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+	border-collapse: collapse;
+	width: 25%;
+}
+
+th, td {
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #cd79a3;
+}
+
+
+x {
+	text-align: center;
+}
+</style>
+</head>
+
+<body>
+	<%
+		if (request.getSession(false).getAttribute("loginStatus") == null)
+			response.sendRedirect("http://localhost:8080/Practise1/login.jsp");
+	%>
+
+	<h1 class=" display-4 text-center">POSTS</h1>
+	<%
+		PostDAOImpl impl = new PostDAOImpl();
+		List<Post> list = impl.view();
+	%>
+	<input type="hidden" name="o" value="12">
+	<div class="container">
+		<table class="table table-bordered">
+			<tr>
+				<th>ID</th>
+				<th>TITLE</th>
+				<th>BODY</th>
+				
+			</tr>
+
+			<%
+				for (Post posts : list) {
+			%>
+			<tr>
+				<td><%=posts.getP_id()%></td>
+				<td><%=posts.getTitle()%></td>
+				<td><%=posts.getBody()%></td>
+
+			</tr>
+			<%
+				}
+			%>
+		</table>
+	</div>
+	<br>
+	<br>
+
+	<div class="x" style="text-align: center">
+		<jsp:include page="footer.jsp"></jsp:include>
+	</div>
+</body>
+</html>
